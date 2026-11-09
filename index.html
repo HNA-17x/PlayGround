@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#07130f" />
+  <link rel="icon" href="data:," />
+  <title>Verdant — a living incremental tree</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="mobile-fix.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Verdant home"><span class="brand-mark">✳</span><span>verdant<span class="brand-period">.</span></span></a>
+      <div class="season-tag"><span class="season-dot"></span><span>YOUR LITTLE UNIVERSE</span></div>
+      <div class="top-actions"><button class="icon-btn" id="soundBtn" aria-label="Toggle sound" title="Sound on/off">♫</button><button class="icon-btn" id="helpBtn" aria-label="How to play" title="How to play">?</button></div>
+    </header>
+
+    <section class="game-layout">
+      <aside class="left-rail">
+        <div class="eyebrow">A TREE THAT GROWS WITH YOU</div>
+        <h1>Small taps.<br><em>Wild growth.</em></h1>
+        <p class="intro">Feed your little world, find new branches, and see how far your tree can reach.</p>
+        <div class="resource-card">
+          <div class="resource-head"><span class="resource-icon">✦</span><span>DEWDROPS</span><span class="live-pill"><i></i> LIVE</span></div>
+          <div class="resource-value" id="dewCount">0</div>
+          <div class="resource-foot"><span>per second</span><strong id="rateCount">+0</strong></div>
+          <div class="resource-rule"></div>
+          <div class="resource-row"><span>Lifetime grown</span><strong id="lifetimeCount">0</strong></div>
+          <div class="resource-row"><span>World speed</span><strong id="speedCount">1×</strong></div>
+        </div>
+        <button class="tap-button" id="tapBtn"><span class="tap-spark">✧</span><span class="tap-label">Give it a little love</span><kbd>SPACE</kbd></button>
+        <div class="tap-hint">Every tap gives <b id="tapPower">1</b> dewdrop</div>
+        <button class="ascend-button" id="ascendBtn" disabled><span>↟</span> <span>LET IT BLOOM</span><small id="ascendHint">Grow 6 nodes to unlock</small></button>
+        <div class="rail-bottom"><span class="save-status"><i></i> AUTO-SAVED</span><button class="reset-link" id="resetBtn">Start fresh</button></div>
+      </aside>
+
+      <section class="tree-panel" aria-label="Interactive 3D upgrade tree">
+        <div class="tree-topline"><div><span class="tree-title">THE CANOPY</span><span class="node-total" id="nodeTotal">01 / 61 GROWN</span></div><div class="tree-controls"><button id="zoomOut" aria-label="Zoom out">−</button><button id="zoomIn" aria-label="Zoom in">+</button><button id="recenter" aria-label="Recenter tree">⌖</button></div></div>
+        <div class="tree-stage" id="treeStage"><canvas id="treeCanvas" aria-label="3D upgrade tree. Drag to rotate, pinch or scroll to zoom."></canvas><div class="canvas-vignette"></div><div class="stage-tip"><span class="drag-icon">⤧</span> DRAG TO EXPLORE <span class="tip-divider">·</span> TAP A GLOWING NODE</div><div class="loading-note" id="loadingNote">Waking the forest…</div></div>
+        <div class="legend" id="legend"></div>
+        <div class="mobile-resource"><span>✦ <strong id="mobileDew">0</strong></span><span class="mobile-rate" id="mobileRate">+0 / sec</span><button id="mobileTap">TAP TO GROW</button></div>
+      </section>
+
+      <aside class="detail-panel" id="detailPanel">
+        <div class="detail-kicker"><span class="detail-orb" id="detailOrb"></span><span id="detailType">THE HEART</span><span class="node-id" id="detailId">01</span></div>
+        <h2 id="detailName">The First Seed</h2>
+        <p class="detail-description" id="detailDescription">Every great forest begins somewhere. Tap the seed to help it wake.</p>
+        <div class="detail-art" id="detailArt"><span class="art-ring"></span><span class="art-symbol">✳</span><span class="art-caption">YOUR NEXT LITTLE MIRACLE</span></div>
+        <div class="detail-effect"><span>WHAT IT DOES</span><strong id="detailEffect">Your journey starts here.</strong></div>
+        <button class="buy-button" id="buyBtn" disabled><span id="buyLabel">Choose a node</span><span class="buy-cost" id="buyCost"></span></button>
+        <div class="detail-foot" id="detailFoot">Select a glowing neighbor to learn more.</div>
+        <div class="mini-progress"><span>GROWN</span><div class="progress-track"><i id="progressFill"></i></div><strong id="progressText">1 / 61</strong></div>
+        <div class="ascension-info" id="ascensionInfo"><span>✧</span><div><b id="essenceCount">0</b> bloom essence<small>Permanent growth bonus</small></div></div>
+      </aside>
+    </section>
+    <footer><span>MADE OF DEWDROPS & DAYDREAMS</span><span class="footer-center">A tiny universe, all your own</span><span id="footerVersion">VERDANT · 3D</span></footer>
+  </main>
+  <div class="toast" id="toast" role="status"></div>
+  <div class="modal-backdrop" id="helpModal" hidden><section class="help-card"><button class="modal-close" id="closeHelp" aria-label="Close">×</button><span class="eyebrow">A NOTE FROM THE FOREST</span><h2>Every branch<br><em>begins with a tap.</em></h2><p>Tap the seed to gather dewdrops. Spend them on glowing neighboring nodes to branch out and unlock new ways to grow.</p><div class="help-types"><span>✦ Tap power</span><span>◉ Upgrade power</span><span>↗ Auto-grow</span><span>⌁ Speed</span><span>✧ Bloom</span></div><p>Grow six nodes to <b>Let It Bloom</b> and earn permanent bloom essence. Your tree grows back stronger each time. It keeps growing while you're away, too.</p><button class="buy-button" id="gotIt">BACK TO GROWING <span>↗</span></button></section></div>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
